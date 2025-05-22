@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 import { Posts } from './post.entity';
 import { Likes } from './like.entity';
 import { Comments } from './comment.entity';
@@ -25,13 +25,17 @@ export class User {
   @UpdateDateColumn()
   updated_at: string;
 
-  @OneToMany(() => Posts, (post) => post.user)
+  @DeleteDateColumn()
+  @Exclude()
+  deletedAt?: Date;
+
+  @OneToMany(() => Posts, (post) => post.user, { cascade: true, eager: false })
   posts: Posts[];
 
-  @OneToMany(() => Likes, (like) => like.user)
+  @OneToMany(() => Likes, (like) => like.user, { cascade: true, eager: false })
   likes: Likes[];
 
-  @OneToMany(() => Comments, (comment) => comment.user)
+  @OneToMany(() => Comments, (comment) => comment.user, { cascade: true, eager: false })
   comments: Comments[];
 
   constructor(partial?, user?) {

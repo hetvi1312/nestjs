@@ -30,6 +30,9 @@ export class Posts {
   @UpdateDateColumn()
   updated_at: string;
 
+  @Column({ type: 'int', default: 0 })
+  likeCount: number;
+
   @OneToMany(() => Likes, (like) => like.post)
   likes: Likes[];
 

@@ -4,6 +4,8 @@ import { Order, PostEnum } from "../enum/pagination.enum";
 
 
 export class CreatePostDto {
+  id?: number;
+
     @ApiProperty({ type: String , required: false})
     @IsOptional()
     @IsString()

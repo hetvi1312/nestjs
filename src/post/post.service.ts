@@ -8,6 +8,8 @@ import { User } from 'src/common/entities/user.entity';
 import { Uploads } from 'src/common/entities/upload.entiity';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { GetAll } from 'src/common/enum/pagination.enum';
+import { Likes } from 'src/common/entities/like.entity';
+import { Comments } from 'src/common/entities/comment.entity';
 
 
 @Injectable()
@@ -16,7 +18,9 @@ export class PostService {
   constructor(
       @InjectRepository(Posts) private postRepository: Repository<Posts>,
       @InjectRepository(Uploads) private uploadRepository: Repository<Uploads>,
-
+      @InjectRepository(User) private userRepository: Repository<User>,
+      @InjectRepository(Likes) private likesRepository: Repository<Likes>,
+       @InjectRepository(Comments) private commentsRepository: Repository<Comments>,
     ) {}
 
   async create(createPostDto: CreatePostDto,user:User) {

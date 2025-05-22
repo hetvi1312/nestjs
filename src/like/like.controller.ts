@@ -18,10 +18,17 @@ export class LikeController {
   create(@Body() createLikeDto: CreateLikeDto,@GetUser() user:User) {
     return this.likeService.toggleLike(createLikeDto,user);
   }
-   @Get()
-     findAll(@Query() paginationDto: PaginationDto, @Query() sortingLikeDto: SortingLikeDto) {
-       return this.likeService.findAll(paginationDto, sortingLikeDto);
-     }
+  
+  @Get()
+    findAll(@Query() paginationDto: PaginationDto, @Query() sortingLikeDto: SortingLikeDto) {
+      return this.likeService.findAll(paginationDto, sortingLikeDto);
+    }
+
+    @Get('likes')
+    async getUsers(@Query('page') page = 1,@Query('limit') limit = 20,) {
+      return this.likeService.getPaginatedUsers(Number(page), Number(limit));
+    }
+
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.likeService.findOne(id);

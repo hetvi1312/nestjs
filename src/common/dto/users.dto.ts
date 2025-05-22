@@ -1,21 +1,27 @@
 import { ApiProperty, ApiPropertyOptional, PartialType } from "@nestjs/swagger";
-import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString } from "class-validator";
+import { IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString, ValidateNested } from "class-validator";
 import { Order, UserEnum } from "../enum/pagination.enum";
+import { CreatePostDto } from "./post.dto";
+import { Type } from "class-transformer";
+import { CreateCommentDto } from "./comment.dto";
 
 export class CreateUserDto {
-    @ApiProperty({ type: String, required: true })
-    @IsNotEmpty()
+
+  id?: string;
+
+    @ApiProperty({ type: String, required: false })
+    @IsOptional()
     @IsString()
     username: string;
 
-    @ApiProperty({ type: String, required: true })
-    @IsNotEmpty()
+    @ApiProperty({ type: String, required: false })
+    @IsOptional()
     @IsString()
     @IsEmail()
     email: string;
 
-    @ApiProperty({ type: String, required: true })
-    @IsNotEmpty()
+    @ApiProperty({ type: String, required: false })
+    @IsOptional()
     @IsString()
     password: string;
   }
@@ -31,17 +37,35 @@ export class CreateUserDto {
     password: string;
 }
 
-export class UpdateUserDto{
+export class UpdateUserDto {
   @ApiProperty({ type: String, required: false })
-    @IsOptional()
-    @IsString()
-    username: string;
+  @IsOptional()
+  @IsString()
+  username: string;
 
-    @ApiProperty({ type: String, required: false })
-    @IsOptional()
-    @IsString()
-    @IsEmail()
-    email: string;
+  @ApiProperty({ type: String, required: false })
+  @IsOptional()
+  @IsString()
+  @IsEmail()
+  email: string;
+
+  @ApiProperty({ type: [CreatePostDto], required: false }) 
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => CreatePostDto)
+  posts?: CreatePostDto[];
+
+  //  @ApiProperty({ type: [CreatePostDto], required: false }) 
+  // @IsOptional()
+  // @ValidateNested({ each: true })
+  // @Type(() => CreatePostDto)
+  // likes?: CreatePostDto[];
+
+  @ApiProperty({ type: [CreateCommentDto], required: false }) 
+  @IsOptional()
+  @ValidateNested({ each: true })
+  @Type(() => CreateCommentDto)
+  comments?: CreateCommentDto[];
 }
 
 export class SortingUserDto {

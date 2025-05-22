@@ -3,13 +3,13 @@ import { IsEnum, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-valida
 import { CommentEnum, Order } from "../enum/pagination.enum";
 
 export class CreateCommentDto {
-    @ApiProperty({ type: String, required: true })
-    @IsNotEmpty()
+    @ApiProperty({ type: String, required: false })
+    @IsOptional()
     @IsString()
     comment: string;
 
-    @ApiProperty({ type: Number, required: true })
-    @IsNotEmpty()
+    @ApiProperty({ type: Number, required: false })
+    @IsOptional()
     @IsNumber()
     post_id: number;
 }
